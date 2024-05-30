@@ -127,20 +127,6 @@ def find_states_bellman_ford(t, rate=2, penalty=1, debug_mode=False):
 
     min_cost = float('inf')
     final_state = 0
-    for j in range(num_states):
-        if
-
-    distances[(num_points, j)] < min_cost:
-            min_cost = distances[(num_points, j)]
-            final_state = j
-
-    state_sequence = []
-    current_vertex = (num_points, final_state)
-    while current_vertex is not None:
-        state_sequence.append(current_vertex[1])
-        current_vertex = predecessors[current_vertex]
-
-    return state_sequence, lambdas, distances
 
 # Main function
 def main():
