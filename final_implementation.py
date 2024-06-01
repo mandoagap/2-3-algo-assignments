@@ -38,3 +38,44 @@ def find_states_viterbi(t, rate=2, penalty=1, debug_mode=False):
             pointer_row.append(0)
         back_pointer.append(pointer_row)
     cost_matrix[0][0] = 0
+
+    if debug_mode:
+        print("Initial cost matrix:")
+        for row in cost_matrix:
+            print([round(x, 2) for x in row])
+
+    for t in range(1, num_points + 1):
+        for j in range(num_states):
+            min_cost = float('inf')
+            best_state = 0
+            for l in range(num_states):
+                if j > l:
+                    transition_cost = cost_matrix[t-1][l] + penalty * (j - l) * math.log(num_points)
+                else:
+                    transition_cost = cost_matrix[t-1][l]
+                if transition_cost < min_cost:
+                    min_cost = transition_cost
+                    best_state = l
+            cost_matrix[t][j] = min_cost - math.log(lambdas[j]) + lambdas[j] * intervals[t-1]
+            back_pointer[j][t] = best_state
+
+        if debug_mode:
+            print(f"Cost matrix after step {t}:")
+            for row in cost_matrix:
+                print([round(x, 2) for x in row])
+
+    min_cost = float('inf')
+    final_state = 0
+    for j in range(num_states):
+        if cost_matrix[num_points][j] < min_cost:
+            min_cost = cost_matrix[num_points][j]
+            final_state = j
+
+    state_sequence = deque()
+    t = num_points
+    while t >= 0:
+        state_sequence.appendleft(final_state)
+        final_state = back_pointer[final_state][t]
+        t -= 1
+
+    return state_sequence, lambdas, cost_matrix
