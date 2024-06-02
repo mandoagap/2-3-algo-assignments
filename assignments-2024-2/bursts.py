@@ -81,3 +81,63 @@ def find_states_viterbi(t, rate=2, penalty=1, debug_mode=False):
 
     return state_sequence, lambdas, cost_matrix
 
+# Bellman-Ford algorithm to find states
+def find_states_bellman_ford(t, rate=2, penalty=1, debug_mode=False):
+    num_points = len(t) - 1
+    total_time = t[-1]
+    intervals = []
+    for i in range(num_points):
+        intervals.append(t[i+1] - t[i])
+
+    num_states = math.ceil(1 + math.log(total_time, rate) + math.log(1 / min(intervals), rate))
+    avg_interval = total_time / num_points
+    lambdas = []
+    for i in range(num_states):
+        lambdas.append(rate**i / avg_interval)
+
+    vertices = []
+    for t in range(num_points + 1):
+        for j in range(num_states):
+            vertices.append((t, j))
+    edges = []
+
+    for t in range(num_points):
+        for i in range(num_states):
+            for j in range(num_states):
+                if j > i:
+                    edge_cost = penalty * (j - i) * math.log(num_points) - math.log(lambdas[j]) + lambdas[j] * intervals[t]
+                else:
+                    edge_cost = -math.log(lambdas[j]) + lambdas[j] * intervals[t]
+                edges.append(((t, i), (t + 1, j), edge_cost))
+
+    distances = {}
+    for v in vertices:
+        distances[v] = float('inf')
+    predecessors = {}
+    for v in vertices:
+        predecessors[v] = None
+    distances[(0, 0)] = 0
+
+    for _ in range(len(vertices) - 1):
+        for (u, v, cost) in edges:
+            if distances[u] + cost < distances[v]:
+                distances[v] = distances[u] + cost
+                predecessors[v] = u
+                if debug_mode:
+                    print(f"Relaxing edge {u} -> {v} with cost {cost}, new distance: {distances[v]}")
+
+    min_cost = float('inf')
+    final_state = 0
+    for j in range(num_states):
+        if distances[(num_points, j)] < min_cost:
+            min_cost = distances[(num_points, j)]
+            final_state = j
+
+    state_sequence = deque()
+    current_vertex = (num_points, final_state)
+    while current_vertex is not None:
+        state_sequence.appendleft(current_vertex[1])
+        current_vertex = predecessors[current_vertex]
+
+    return state_sequence, lambdas, distances
+
