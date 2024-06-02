@@ -110,4 +110,36 @@ def find_states_bellman_ford(t, rate=2, penalty=1, debug_mode=False):
                     edge_cost = -math.log(lambdas[j]) + lambdas[j] * intervals[t]
                 edges.append(((t, i), (t + 1, j), edge_cost))
 
+    distances = {}
+    for v in vertices:
+        distances[v] = float('inf')
+    predecessors = {}
+    for v in vertices:
+        predecessors[v] = None
+    distances[(0, 0)] = 0
+
+    for _ in range(len(vertices) - 1):
+        for (u, v, cost) in edges:
+            if distances[u] + cost < distances[v]:
+                distances[v] = distances[u] + cost
+                predecessors[v] = u
+                if debug_mode:
+                    print(f"Relaxing edge {u} -> {v} with cost {cost}, new distance: {distances[v]}")
+
+    min_cost = float('inf')
+    final_state = 0
+    for j in range(num_states):
+        if distances[(num_points, j)] < min_cost:
+            min_cost = distances[(num_points, j)]
+            final_state = j
+
+    state_sequence = deque()
+    current_vertex = (num_points, final_state)
+    while current_vertex is not None:
+        state_sequence.appendleft(current_vertex[1])
+        current_vertex = predecessors[current_vertex]
+
+    return state_sequence, lambdas, distances
+
+
     
