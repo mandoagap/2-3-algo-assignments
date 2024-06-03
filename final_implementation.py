@@ -141,5 +141,16 @@ def find_states_bellman_ford(t, rate=2, penalty=1, debug_mode=False):
 
     return state_sequence, lambdas, distances
 
+# Function to print states
+def show_states(times, seq):
+    num_points = len(times) - 1
+    current = seq[0]
+    start = times[0]
+    for t in range(1, num_points + 1):
+        if seq[t] != current:
+            print(f"{current} [{start} {times[t-1]})")
+            current = seq[t]
+            start = times[t-1]
+    print(f"{current} [{start} {times[-1]})")
 
     
