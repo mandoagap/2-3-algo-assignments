@@ -153,4 +153,34 @@ def show_states(times, seq):
             start = times[t-1]
     print(f"{current} [{start} {times[-1]})")
 
-    
+# Main function
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("algorithm", choices=["viterbi", "trellis"])
+    parser.add_argument("file")
+    parser.add_argument("-s", type=float, default=2)
+    parser.add_argument("-g", "--gamma", type=float, default=1)
+    parser.add_argument("-d", action="store_true")
+    args = parser.parse_args()
+
+    timestamps = load_file(args.file)
+
+    if args.algorithm == "viterbi":
+        states, lambdas, C = find_states_viterbi(timestamps, args.s, args.gamma, args.d)
+        if args.d:
+            print("Final cost matrix:")
+            for row in C:
+                print([round(x, 2) for x in row])
+        show_states(timestamps, states)
+    elif args.algorithm == "trellis":
+        states, lambdas, distances = find_states_bellman_ford(timestamps, args.s, args.gamma, args.d)
+        if args.d:
+            print("Final distances:")
+            for key, value in distances.items():
+                print(f"{key}: {round(value, 2)}")
+        show_states(timestamps, states)
+    else:
+        print("Unknown algorithm specified.")
+
+if __name__ == "__main__":
+    main()
