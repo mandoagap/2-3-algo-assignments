@@ -34,3 +34,6 @@ def main():
         print("not implemented")
     elif args.methodos == 'greedy':
         print("not implemented")
+
+if __name__ == "__main__":
+    main()
