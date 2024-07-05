@@ -23,4 +23,10 @@ def main():
     parser.add_argument('epanalipseis', type=int)
     parser.add_argument('-r', '--random_seed', type=int, default=None)
     args = parser.parse_args()
+    
+    grafos = diavasma_arxeiou(args.grafos)
+    
+    print(grafos)
+
+    print(args.methodos, args.k, args.pithanotita, args.epanalipseis)
 
