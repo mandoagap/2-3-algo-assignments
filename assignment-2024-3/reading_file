@@ -17,4 +17,6 @@ def diavasma_arxeiou(file_name):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('grafos', type=str)
+    parser.add_argument('k', type=int)
+    parser.add_argument('methodos', choices=['max_degree', 'greedy'])
 
