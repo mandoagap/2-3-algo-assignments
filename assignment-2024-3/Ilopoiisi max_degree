@@ -18,3 +18,8 @@ def prosomoiosi_anexartitis_allilouxias(grafo, seeds, pithanotita):
         for geitonas in grafo[kombos]:
             if geitonas not in energoi_synolou:
                 rand = random.random()
+                if rand < pithanotita:
+                    energoi_synolou.add(geitonas)
+                    oura_kombon.append(geitonas)
+    
+    return len(energoi_synolou)
