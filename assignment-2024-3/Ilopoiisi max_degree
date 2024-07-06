@@ -1,0 +1,9 @@
+import argparse
+import random
+from collections import defaultdict, deque
+
+def select_seeds_max_degree(grafo, k):
+    """Επιλογή κόμβων με το μέγιστο βαθμό γειτνίασης."""
+    vathmos = {kombos: len(geitones) for kombos, geitones in grafo.items()}
+    taksinomimenoi_kombos = sorted(vathmos, key=lambda x: (-vathmos[x], x))
+    return taksinomimenoi_kombos[:k]
