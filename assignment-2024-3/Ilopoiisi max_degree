@@ -23,3 +23,9 @@ def prosomoiosi_anexartitis_allilouxias(grafo, seeds, pithanotita):
                     oura_kombon.append(geitonas)
     
     return len(energoi_synolou)
+
+def diavasma_arxeiou(file_name):
+    """Διάβασε το γράφο από ένα αρχείο και κατασκεύασε μια λίστα γειτνίασης."""
+    graph_data = open(file_name).readlines()
+    grafo = defaultdict(list)
+    for edge in graph_data:
