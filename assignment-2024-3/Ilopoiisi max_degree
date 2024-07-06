@@ -12,3 +12,9 @@ def prosomoiosi_anexartitis_allilouxias(grafo, seeds, pithanotita):
     """Προσομοίωση της Ανεξάρτητης Αλληλουχίας."""
     energoi_synolou = set(seeds)
     oura_kombon = deque(seeds)
+
+    while len(oura_kombon) > 0:
+        kombos = oura_kombon.popleft()
+        for geitonas in grafo[kombos]:
+            if geitonas not in energoi_synolou:
+                rand = random.random()
