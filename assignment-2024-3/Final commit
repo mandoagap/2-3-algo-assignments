@@ -73,3 +73,10 @@ def main():
     elif args.methodos == 'greedy':
         seeds = select_seeds_greedy(grafos, args.k, args.pithanotita, args.epanalipseis)
 
+    epirroes = [round(sum(prosomoiosi_anexartitis_allilouxias(grafos, seeds[:i+1], args.pithanotita) for _ in range(args.epanalipseis)) / args.epanalipseis, 3) for i in range(len(seeds))]
+
+    print(f"Seeds {seeds}")
+    print(f"Influences {epirroes}")
+
+if __name__ == "__main__":
+    main()
