@@ -18,3 +18,9 @@ def prosomoiosi_anexartitis_allilouxias(grafo, seeds, pithanotita):
     
     return len(energoi_synolou)
 
+def ypologismos_perithoriakou_ofelous(grafo, seeds, neos_kombos, p, epanalipseis):
+    """Υπολογισμός του περιθωριακού οφέλους από την προσθήκη ενός νέου κόμβου."""
+    trexousa_epiroi = sum(prosomoiosi_anexartitis_allilouxias(grafo, seeds, p) for _ in range(epanalipseis)) / epanalipseis
+    nea_epiroi = sum(prosomoiosi_anexartitis_allilouxias(grafo, seeds + [neos_kombos], p) for _ in range(epanalipseis)) / epanalipseis
+    epiroi_ayksisi = nea_epiroi - trexousa_epiroi
+    return epiroi_ayksisi
