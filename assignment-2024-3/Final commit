@@ -34,3 +34,13 @@ def select_seeds_max_degree(grafo, k):
 def select_seeds_greedy(grafo, arithmos_seeds, pithanotita, epanalipseis):
     """Greedy αλγόριθμος για επιλογή seeds."""
     lista_seeds = []
+    for _ in range(arithmos_seeds):
+        kalyteros_kombos = None
+        megisti_epiroi = -1
+        for kombos in set(grafo.keys()) - set(lista_seeds):
+            kerdos = ypologismos_perithoriakou_ofelous(grafo, lista_seeds, kombos, pithanotita, epanalipseis)
+            if kerdos > megisti_epiroi:
+                megisti_epiroi = kerdos
+                kalyteros_kombos = kombos
+        lista_seeds.append(kalyteros_kombos)
+    return lista_seeds
