@@ -24,3 +24,9 @@ def ypologismos_perithoriakou_ofelous(grafo, seeds, neos_kombos, p, epanalipseis
     nea_epiroi = sum(prosomoiosi_anexartitis_allilouxias(grafo, seeds + [neos_kombos], p) for _ in range(epanalipseis)) / epanalipseis
     epiroi_ayksisi = nea_epiroi - trexousa_epiroi
     return epiroi_ayksisi
+
+def select_seeds_max_degree(grafo, k):
+    """Επιλογή κόμβων με το μέγιστο βαθμό γειτνίασης."""
+    vathmos = {kombos: len(geitones) for kombos, geitones in grafo.items()}
+    taksinomimenoi_kombos = sorted(vathmos, key=lambda x: (-vathmos[x], x))
+    return taksinomimenoi_kombos[:k]
