@@ -44,3 +44,14 @@ def select_seeds_greedy(grafo, arithmos_seeds, pithanotita, epanalipseis):
                 kalyteros_kombos = kombos
         lista_seeds.append(kalyteros_kombos)
     return lista_seeds
+
+def diavasma_arxeiou(file_name):
+    """Διάβασε το γράφο από ένα αρχείο και κατασκεύασε μια λίστα γειτνίασης."""
+    graph_data = open(file_name).readlines()
+    grafo = defaultdict(list)
+    for edge in graph_data:
+        nodes = edge.split()
+        u = int(nodes[0])
+        v = int(nodes[1])
+        grafo[u].append(v)
+    return grafo
