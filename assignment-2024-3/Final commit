@@ -67,3 +67,9 @@ def main():
     args = parser.parse_args()
 
     grafos = diavasma_arxeiou(args.path)
+
+    if args.methodos == 'max_degree':
+        seeds = select_seeds_max_degree(grafos, args.k)
+    elif args.methodos == 'greedy':
+        seeds = select_seeds_greedy(grafos, args.k, args.pithanotita, args.epanalipseis)
+
