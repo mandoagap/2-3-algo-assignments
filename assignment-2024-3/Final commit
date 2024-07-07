@@ -30,3 +30,7 @@ def select_seeds_max_degree(grafo, k):
     vathmos = {kombos: len(geitones) for kombos, geitones in grafo.items()}
     taksinomimenoi_kombos = sorted(vathmos, key=lambda x: (-vathmos[x], x))
     return taksinomimenoi_kombos[:k]
+
+def select_seeds_greedy(grafo, arithmos_seeds, pithanotita, epanalipseis):
+    """Greedy αλγόριθμος για επιλογή seeds."""
+    lista_seeds = []
