@@ -1,1 +1,7 @@
-
+import argparse
+import random
+from collections import defaultdict, deque
+def prosomoiosi_anexartitis_allilouxias(grafo, seeds, pithanoti
+    """Προσομοίωση της Ανεξάρτητης Αλληλουχίας."""
+    energoi_synolou = set(seeds)
+    oura_kombon = deque(seeds)
